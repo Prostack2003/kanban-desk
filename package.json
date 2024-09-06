@@ -1,0 +1,26 @@
+{
+  "name": "kanban-desk",
+  "private": true,
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^22.5.4",
+    "eslint": "^9.9.1",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-webpack-plugin": "^4.2.0",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.4.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
