@@ -16,7 +16,7 @@ export default (env: EnvVariables) => {
 
     const config: webpack.Configuration = {
         mode: env.mode ?? 'development',
-        entry: path.resolve(__dirname, 'src', 'index.ts'),
+        entry: path.resolve(__dirname, 'src', 'index.tsx'),
         output: {
             filename: 'bundle.js',
             path: path.resolve(__dirname, 'build'),
@@ -28,9 +28,30 @@ export default (env: EnvVariables) => {
         module: {
             rules: [
                 {
+                    test: /\.s[ac]ss$/i,
+                    use: [
+                        // Creates `style` nodes from JS strings
+                        "style-loader",
+                        // Translates CSS into CommonJS
+                        "css-loader",
+                        // Compiles Sass to CSS
+                        "sass-loader",
+                    ],
+                },
+                {
                     test: /\.tsx$/,
                     use: 'ts-loader',
                     exclude: /node_modules/,
+                },
+                {
+                    test: /\.(js|jsx)$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env', '@babel/preset-react'],
+                        },
+                    },
                 },
             ],
         },
@@ -38,6 +59,7 @@ export default (env: EnvVariables) => {
         devServer: isDev ? {
             port: env.port ?? 3000,
             open: true,
+            hot: true,
         } : undefined,
         plugins: [
             new ESLintPlugin({
