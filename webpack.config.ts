@@ -1,8 +1,10 @@
-const path = require('path');
-const ESLintPlugin = require('eslint-webpack-plugin');
+import path from 'path';
+import ESLintPlugin from 'eslint-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import webpack from 'webpack';
 
-module.exports = (env: any) => {
-    return {
+export default (env: any) => {
+    const config: webpack.Configuration = {
         mode: env.mode ?? 'development',
         entry: path.resolve(__dirname, 'src', 'index.ts'),
         output: {
@@ -11,20 +13,25 @@ module.exports = (env: any) => {
             clean: true,
         },
         resolve: {
-            extensions: ['.ts', '.js'],
+            extensions: ['.tsx','.ts', '.js'],
         },
         module: {
             rules: [
                 {
-                    test: /\.ts$/,
+                    test: /\.tsx$/,
                     use: 'ts-loader',
                     exclude: /node_modules/,
                 },
             ],
         },
-        plugins: [new ESLintPlugin({
-            extensions: ['ts', 'js', 'jsx', 'tsx'],
-            fix: true,
-        })],
+        plugins: [
+            new ESLintPlugin({
+                extensions: ['ts', 'js', 'jsx', 'tsx'],
+                fix: true,
+            }),
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, 'src', 'index.html'),
+            })],
     }
+    return config
 };

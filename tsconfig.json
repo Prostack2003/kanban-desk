@@ -11,5 +11,10 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node"
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   }
 }
