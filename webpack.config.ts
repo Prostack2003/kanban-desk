@@ -64,7 +64,14 @@ export default (env: EnvVariables) => {
                 {
                     test: /\.svg$/,
                     loader: 'svg-inline-loader'
-                }
+                },
+                {
+                    test: /\.m?js$/,
+                    exclude: /(node_modules|bower_components)/,
+                    use: {
+                        loader: "babel-loader"
+                    }
+                },
             ],
         },
         devtool: isDev ? 'inline-source-map' : false,
