@@ -53,6 +53,14 @@ export default (env: EnvVariables) => {
                         },
                     },
                 },
+                {
+                    test: /\.(png|jpe?g|gif)$/i,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                        },
+                    ],
+                },
             ],
         },
         devtool: isDev ? 'inline-source-map' : false,
