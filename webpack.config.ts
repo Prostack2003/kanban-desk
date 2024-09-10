@@ -61,6 +61,10 @@ export default (env: EnvVariables) => {
                         },
                     ],
                 },
+                {
+                    test: /\.svg$/,
+                    loader: 'svg-inline-loader'
+                }
             ],
         },
         devtool: isDev ? 'inline-source-map' : false,
