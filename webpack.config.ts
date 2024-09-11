@@ -46,12 +46,7 @@ export default (env: EnvVariables) => {
                 {
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['@babel/preset-env', '@babel/preset-react'],
-                        },
-                    },
+                    use: 'babel-loader',
                 },
                 {
                     test: /\.(png|jpe?g|gif)$/i,
@@ -64,7 +59,7 @@ export default (env: EnvVariables) => {
                 {
                     test: /\.svg$/,
                     loader: 'svg-inline-loader'
-                }
+                },
             ],
         },
         devtool: isDev ? 'inline-source-map' : false,
