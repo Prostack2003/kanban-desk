@@ -1,7 +1,13 @@
+import Header from './components/Header/Header';
+
 export default function App() {
+  const handleSearch = (value: string) => {
+    console.log(value);
+  };
+
   return (
-    <div>
-      <span>Hello world!</span>
-    </div>
+    <>
+      <Header onSearch={handleSearch}/>
+    </>
   )
 }
