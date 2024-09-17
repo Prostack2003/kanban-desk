@@ -4,12 +4,15 @@ import CreateModal from '../CreateModal/CreateModal';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import BoardCard from '../BoardCard/BoardCard';
 
-const initialDesks = [{id: 0, name: 'Первая Доска'}]
-
 export default function BoardList() {
+  const initialDesks = [{ id: 0, name: 'Первая Доска' }];
   const [desks, setDesks] = useState(initialDesks);
-  const [isOpen, setIsOpen] = useState(false);
 
+  const deleteDesk = (id: number) => {
+    setDesks(desks.filter((desk) => desk.id !== id));
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
@@ -20,7 +23,12 @@ export default function BoardList() {
           <p>Нет доступных досок</p>
         ) : (
           desks.map((desk) => (
-            <BoardCard key={desk.id} name={desk.name} />
+            <BoardCard
+              name={desk.name}
+              id={desk.id}
+              onDelete={() => deleteDesk(desk.id)}
+              setDesks={setDesks}
+            />
           ))
         )}
       </BoardContainer>
