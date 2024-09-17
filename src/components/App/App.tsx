@@ -1,7 +1,10 @@
+import React from 'react';
+import BoardList from './components/BoardList/BoardList';
+
 export default function App() {
   return (
     <div>
-      <span>Hello world!</span>
+      <BoardList />
     </div>
   )
 }
