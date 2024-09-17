@@ -3,7 +3,7 @@ import { Wrapper } from './BoardCard.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { TooltipButton, TooltipWrapper } from '../../elements/Buttons/Tooltip/Tooltip.styles';
 import ChangeModal from '../ChangeModal/ChangeModal';
-import DeleteModal from '../DeleteModel/DeleteModal';
+import DeleteModal from '../DeleteModal/DeleteModal';
 
 interface BoardCardProps {
   name: string,
