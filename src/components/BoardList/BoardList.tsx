@@ -24,6 +24,7 @@ export default function BoardList() {
         ) : (
           desks.map((desk) => (
             <BoardCard
+              key={desk.id}
               name={desk.name}
               id={desk.id}
               onDelete={() => deleteDesk(desk.id)}
