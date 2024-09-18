@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { InputModal } from './CreateModal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
-import { useInput } from '../../elements/CustomHooks/useInput/useInput';
 
 interface CreateModalProps {
   isOpen: boolean;
@@ -11,7 +10,7 @@ interface CreateModalProps {
 }
 
 export default function CreateModal({ isOpen, onClose, setDesks }: CreateModalProps) {
-  const [deskName, handleChange] = useInput('');
+  const [deskName, setDeskName] = useState('');
   const [nextId, setNextId] = useState(1)
 
   const handleSubmit = () => {
@@ -19,7 +18,12 @@ export default function CreateModal({ isOpen, onClose, setDesks }: CreateModalPr
 
     setDesks(prevDesks => [...prevDesks, { id: nextId, name: deskName }]);
     setNextId(prevId => prevId + 1);
+    setDeskName('')
     onClose();
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDeskName(event.target.value);
   };
 
   if (!isOpen) return null;
