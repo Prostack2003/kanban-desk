@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Wrapper } from './Header.styles';
-import SearchInput from '../../elements/Buttons/Search/Search';
+import { SearchInput } from '../../elements/Buttons/Search/Search';
 
 interface HeaderProps {
   onSearch: (value: string) => void;

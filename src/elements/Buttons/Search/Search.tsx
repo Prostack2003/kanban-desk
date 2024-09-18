@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Search } from './Search.styles';
 
 interface SearchProps {
   onSearch: (value: string) => void;
 }
 
-export default function SearchInput({ onSearch }: SearchProps) {
+export const SearchInput:FC<SearchProps> = ({ onSearch }) => {
   const [searchText, setSearchText] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
