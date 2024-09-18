@@ -27,7 +27,7 @@ export const BoardList:FC<BoardListProps> = ({search}) => {
     <Wrapper>
       <BoardContainer>
         {searchDesks.length === 0 ? (
-          <p>Нет доступных досок</p>
+          <p className='board-paragraph'>Нет доступных досок</p>
         ) : (
           searchDesks.map((desk) => (
             <BoardCard
