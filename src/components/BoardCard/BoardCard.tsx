@@ -15,10 +15,10 @@ interface BoardCardProps {
 }
 
 export default function BoardCard({ name, id, onDelete, setDesks }: BoardCardProps) {
-  const [isOpenTooltip, setIsOpenTooltip] = useState(false);
+  const [isOpenTooltip, setIsOpenTooltip] = useState<boolean>(false);
 
-  const [isChangeModalOpen, setIsChangeModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isChangeModalOpen, setIsChangeModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   const toggleTooltip = () => setIsOpenTooltip((prevState) => !prevState);
 
