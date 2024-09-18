@@ -20,16 +20,15 @@ export default function BoardCard({ name, id, onDelete, setDesks }: BoardCardPro
   const [isChangeModalOpen, setIsChangeModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const openTooltip = () => setIsOpenTooltip(true);
-  const closeTooltip = () => setIsOpenTooltip(false);
+  const toggleTooltip = () => setIsOpenTooltip((prevState) => !prevState);
 
   const handleEdit = () => {
-    closeTooltip()
+    setIsOpenTooltip(false);
     setIsChangeModalOpen(true)
   };
 
   const handleDelete = () => {
-    closeTooltip()
+    setIsOpenTooltip(false)
     setIsDeleteModalOpen(true)
   };
 
@@ -41,7 +40,7 @@ export default function BoardCard({ name, id, onDelete, setDesks }: BoardCardPro
   return (
     <Wrapper>
       <p key={id}>{name}</p>
-      <Button onClick={openTooltip}>Изменить Доску</Button>
+      <Button onClick={toggleTooltip}>Изменить Доску</Button>
       {isOpenTooltip && (
         <TooltipWrapper>
           <TooltipButton onClick={handleEdit}>Редактировать</TooltipButton>
