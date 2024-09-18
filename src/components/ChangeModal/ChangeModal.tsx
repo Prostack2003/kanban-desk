@@ -1,6 +1,7 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction} from 'react';
 import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
+import { useInput } from '../../elements/CustomHooks/useInput/useInput';
 
 interface ChangeModalProps {
   isOpenTooltip: boolean;
@@ -11,11 +12,7 @@ interface ChangeModalProps {
 }
 
 export const ChangeModal:FC<ChangeModalProps> = ({ isOpenTooltip, onClose, name, deskId, setDesks }) => {
-  const [newName, setNewName] = useState(name);
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewName(event.target.value);
-  };
+  const [newName, handleNameChange] = useInput(name)
 
   const handleSave = () => {
     setDesks(prevDesks => prevDesks.map(desk =>
