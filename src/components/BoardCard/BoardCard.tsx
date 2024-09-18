@@ -5,11 +5,13 @@ import { TooltipButton, TooltipWrapper } from '../../elements/Buttons/Tooltip/To
 import ChangeModal from '../ChangeModal/ChangeModal';
 import DeleteModal from '../DeleteModal/DeleteModal';
 
+type stateDesks = {id: number; name: string;}[]
+
 interface BoardCardProps {
   name: string,
   id: number,
   onDelete: () => void;
-  setDesks: Dispatch<SetStateAction<{ id: number; name: string; }[]>>;
+  setDesks: Dispatch<SetStateAction<stateDesks>>;
 }
 
 export default function BoardCard({ name, id, onDelete, setDesks }: BoardCardProps) {
