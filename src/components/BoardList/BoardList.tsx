@@ -4,7 +4,11 @@ import CreateModal from '../CreateModal/CreateModal';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { BoardCard } from '../BoardCard/BoardCard';
 
-export const BoardList:FC = () => {
+interface BoardListProps {
+  search: string
+}
+
+export const BoardList:FC<BoardListProps> = ({search}) => {
   const initialDesks = [{ id: 0, name: 'Первая Доска' }];
   const [desks, setDesks] = useState(initialDesks);
 
@@ -16,13 +20,16 @@ export const BoardList:FC = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const searchDesks = desks.filter((desk) =>
+    desk.name.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <Wrapper>
       <BoardContainer>
-        {desks.length === 0 ? (
+        {searchDesks.length === 0 ? (
           <p>Нет доступных досок</p>
         ) : (
-          desks.map((desk) => (
+          searchDesks.map((desk) => (
             <BoardCard
               key={desk.id}
               name={desk.name}
