@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 
@@ -10,7 +10,7 @@ interface ChangeModalProps {
   setDesks: Dispatch<SetStateAction<{ id: number; name: string; }[]>>;
 }
 
-export default function ChangeModal({ isOpenTooltip, onClose, name, deskId, setDesks }: ChangeModalProps) {
+export const ChangeModal:FC<ChangeModalProps> = ({ isOpenTooltip, onClose, name, deskId, setDesks }) => {
   const [newName, setNewName] = useState(name);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

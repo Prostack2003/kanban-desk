@@ -1,7 +1,8 @@
-import Header from './components/Header/Header';
-import BoardList from './components/BoardList/BoardList';
+import { FC } from 'react';
+import { Header } from './components/Header/Header';
+import { BoardList } from './components/BoardList/BoardList';
 
-export default function App() {
+export const App: FC = () => {
   const handleSearch = (value: string) => {
     console.log(value);
   };

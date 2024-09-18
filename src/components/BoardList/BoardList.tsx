@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Wrapper, BoardContainer, ButtonContainer } from './BoardList.styles';
 import CreateModal from '../CreateModal/CreateModal';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
-import BoardCard from '../BoardCard/BoardCard';
+import { BoardCard } from '../BoardCard/BoardCard';
 
-export default function BoardList() {
+export const BoardList:FC = () => {
   const initialDesks = [{ id: 0, name: 'Первая Доска' }];
   const [desks, setDesks] = useState(initialDesks);
 

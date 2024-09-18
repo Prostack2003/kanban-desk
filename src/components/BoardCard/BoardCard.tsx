@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Wrapper } from './BoardCard.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { TooltipButton, TooltipWrapper } from '../../elements/Buttons/Tooltip/Tooltip.styles';
-import ChangeModal from '../ChangeModal/ChangeModal';
-import DeleteModal from '../DeleteModal/DeleteModal';
+import { ChangeModal } from '../ChangeModal/ChangeModal';
+import { DeleteModal } from '../DeleteModal/DeleteModal';
 
 type stateDesks = {id: number; name: string;}[]
 
@@ -14,7 +14,7 @@ interface BoardCardProps {
   setDesks: Dispatch<SetStateAction<stateDesks>>;
 }
 
-export default function BoardCard({ name, id, onDelete, setDesks }: BoardCardProps) {
+export const BoardCard:FC<BoardCardProps> = ({ name, id, onDelete, setDesks }) => {
   const [isOpenTooltip, setIsOpenTooltip] = useState<boolean>(false);
 
   const [isChangeModalOpen, setIsChangeModalOpen] = useState<boolean>(false);
