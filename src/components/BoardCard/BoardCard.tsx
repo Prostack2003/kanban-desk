@@ -1,18 +1,10 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, {FC, useState } from 'react';
 import { Wrapper } from './BoardCard.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { TooltipButton, TooltipWrapper } from '../../elements/Buttons/Tooltip/Tooltip.styles';
 import { ChangeModal } from '../ChangeModal/ChangeModal';
 import { DeleteModal } from '../DeleteModal/DeleteModal';
-
-type stateDesks = {id: number; name: string;}[]
-
-interface BoardCardProps {
-  name: string,
-  id: number,
-  onDelete: () => void;
-  setDesks: Dispatch<SetStateAction<stateDesks>>;
-}
+import { BoardCardProps } from '../../utils/Props/BoardCardProps';
 
 export const BoardCard:FC<BoardCardProps> = ({ name, id, onDelete, setDesks }) => {
   const [isOpenTooltip, setIsOpenTooltip] = useState<boolean>(false);

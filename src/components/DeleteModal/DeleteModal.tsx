@@ -1,13 +1,7 @@
 import React, { FC } from 'react';
 import { ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
-
-interface DeleteModalProps {
-  isOpenTooltip: boolean;
-  onClose: () => void;
-  onDelete: () => void;
-}
-
+import { DeleteModalProps } from '../../utils/Props/DeleteModalProps';
 
 export const DeleteModal:FC<DeleteModalProps> = ({isOpenTooltip , onClose, onDelete}) => {
   if (!isOpenTooltip) return null;

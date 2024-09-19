@@ -1,15 +1,9 @@
-import React, { Dispatch, FC, SetStateAction} from 'react';
+import React, {FC} from 'react';
 import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
-import { useInput } from '../../elements/CustomHooks/useInput/useInput';
+import { useInput } from '../../utils/CustomHooks/useInput';
+import { ChangeModalProps } from '../../utils/Props/ChangeModalProps';
 
-interface ChangeModalProps {
-  isOpenTooltip: boolean;
-  onClose: () => void;
-  name: string;
-  deskId: number;
-  setDesks: Dispatch<SetStateAction<{ id: number; name: string; }[]>>;
-}
 
 export const ChangeModal:FC<ChangeModalProps> = ({ isOpenTooltip, onClose, name, deskId, setDesks }) => {
   const [newName, handleNameChange] = useInput(name)
