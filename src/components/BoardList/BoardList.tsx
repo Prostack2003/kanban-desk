@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
 import { Wrapper, BoardContainer, ButtonContainer } from './BoardList.styles';
-import CreateModal from '../CreateModal/CreateModal';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { BoardCard } from '../BoardCard/BoardCard';
+import { CreateModal } from '../CreateModal/CreateModal';
 
 interface BoardListProps {
   search: string

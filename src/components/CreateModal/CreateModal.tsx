@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { InputModal } from './CreateModal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
@@ -9,7 +9,7 @@ interface CreateModalProps {
   setDesks: Dispatch<SetStateAction<{ id: number; name: string; }[]>>;
 }
 
-export default function CreateModal({ isOpen, onClose, setDesks }: CreateModalProps) {
+export const CreateModal: FC<CreateModalProps> = ({ isOpen, onClose, setDesks })  => {
   const [deskName, setDeskName] = useState('');
   const [nextId, setNextId] = useState(1)
 
