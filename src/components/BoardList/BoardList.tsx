@@ -17,16 +17,16 @@ export const BoardList:FC<BoardListProps> = ({search}) => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const searchDesks = desks.filter((desk) =>
+  const desksForSearch = desks.filter((desk) =>
     desk.name.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <Wrapper>
       <BoardContainer>
-        {searchDesks.length === 0 ? (
+        {desksForSearch.length === 0 ? (
           <p className='board-paragraph'>Нет доступных досок</p>
         ) : (
-          searchDesks.map((desk) => (
+          desksForSearch.map((desk) => (
             <BoardCard
               key={desk.id}
               name={desk.name}
