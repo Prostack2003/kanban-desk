@@ -67,6 +67,7 @@ export default (env: EnvVariables) => {
             port: env.port ?? 3000,
             open: true,
             hot: true,
+            historyApiFallback: true,
         } : undefined,
         plugins: [
             new ESLintPlugin({
