@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { useInput } from '../../utils/CustomHooks/useInput';
-import { ChangeModalProps } from '../../utils/Props/ChangeModalProps';
+import { ChangeModalProps } from './ChangeModalProps';
 
 
 export const ChangeModal:FC<ChangeModalProps> = ({ isOpenTooltip, onClose, name, deskId, setDesks }) => {

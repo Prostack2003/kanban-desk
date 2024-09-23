@@ -2,9 +2,9 @@ import React, {FC, useState } from 'react';
 import { Wrapper } from './BoardCard.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
 import { TooltipButton, TooltipWrapper } from '../../elements/Buttons/Tooltip/Tooltip.styles';
-import { ChangeModal } from '../ChangeModal/ChangeModal';
-import { DeleteModal } from '../DeleteModal/DeleteModal';
-import { BoardCardProps } from '../../utils/Props/BoardCardProps';
+import { ChangeModal } from '../../components';
+import { DeleteModal } from '../../components';
+import { BoardCardProps } from './BoardCardProps';
 
 export const BoardCard:FC<BoardCardProps> = ({ name, id, onDelete, setDesks }) => {
   const [isOpenTooltip, setIsOpenTooltip] = useState<boolean>(false);

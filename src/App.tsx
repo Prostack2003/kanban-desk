@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
-import { Header } from './components/Header/Header';
-import { BoardList } from './components/BoardList/BoardList';
+import { Header } from './components/Header';
+import { BoardList } from './components/BoardList';
 
 export const App: FC = () => {
   const [search, setSearch] = useState('')

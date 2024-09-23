@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Wrapper } from './Header.styles';
-import { SearchInput } from '../../elements/Buttons/Search/Search';
-import { HeaderProps } from '../../utils/Props/HeaderProps';
+import { SearchInput } from '../../elements';
+import { HeaderProps } from './HeaderProps';
 
 export const Header:FC<HeaderProps> = ({onSearch}: HeaderProps) => {
   return (

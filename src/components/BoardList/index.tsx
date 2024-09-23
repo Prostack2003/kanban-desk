@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 import { Wrapper, BoardContainer, ButtonContainer } from './BoardList.styles';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
-import { BoardCard } from '../BoardCard/BoardCard';
-import { CreateModal } from '../CreateModal/CreateModal';
-import { BoardListProps } from '../../utils/Props/BoardListProps';
+import { BoardCard } from '../../components';
+import { CreateModal } from '../../components';
+import { BoardListProps } from './BoardListProps';
 
 export const BoardList:FC<BoardListProps> = ({search}) => {
   const initialDesks = [{ id: 0, name: 'Первая Доска' }];
