@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { InputModal } from './CreateModal.styles';
-import { Button } from '../../elements/Buttons/MainButton/Button.styles';
-import { ModalContent, ModalOverlay, Wrapper } from '../../elements/Modal/Modal.styles';
+import { Button } from '../../../elements/Buttons/MainButton/Button.styles';
+import { ModalContent, ModalOverlay, Wrapper } from '../../../elements/Modal/Modal.styles';
 
 interface CreateModalProps {
   isOpen: boolean;
