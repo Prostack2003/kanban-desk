@@ -4,3 +4,4 @@ export { BoardCard } from './BoardList/BoardCard';
 export { ChangeModal } from './BoardList/BoardCard/ChangeModal';
 export { CreateModal } from './BoardList/CreateModal';
 export { DeleteModal } from './BoardList/BoardCard/DeleteModal';
+export { Task } from './BoardList/BoardCard/Task';

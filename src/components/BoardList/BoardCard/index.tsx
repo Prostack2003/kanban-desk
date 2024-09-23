@@ -5,6 +5,7 @@ import { TooltipButton, TooltipWrapper } from '../../../elements/Buttons/Tooltip
 import { ChangeModal } from '../../../components';
 import { DeleteModal } from '../../../components';
 import { BoardCardProps } from './BoardCardProps';
+import { Link } from 'react-router-dom';
 
 export const BoardCard:FC<BoardCardProps> = ({ name, id, onDelete, setDesks }) => {
   const [isOpenTooltip, setIsOpenTooltip] = useState<boolean>(false);
@@ -31,7 +32,9 @@ export const BoardCard:FC<BoardCardProps> = ({ name, id, onDelete, setDesks }) =
 
   return (
     <Wrapper>
-      <p key={id}>{name}</p>
+      <Link to={`tasks/task/${id}`} style={{textDecoration: 'none', color: 'black'}}>
+        <p key={id}>{name}</p>
+      </Link>
       <Button onClick={toggleTooltip}>Изменить Доску</Button>
       {isOpenTooltip && (
         <TooltipWrapper>
