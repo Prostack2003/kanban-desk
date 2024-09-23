@@ -1,15 +1,18 @@
-import Header from './components/Header/Header';
-import BoardList from './components/BoardList/BoardList';
+import { FC, useState } from 'react';
+import { Header } from './components/Header';
+import { BoardList } from './components/BoardList';
 
-export default function App() {
+export const App: FC = () => {
+  const [search, setSearch] = useState('')
+
   const handleSearch = (value: string) => {
-    console.log(value);
+    setSearch(value)
   };
 
   return (
     <>
       <Header onSearch={handleSearch}/>
-      <BoardList />
+      <BoardList search={search} />
     </>
   )
 }

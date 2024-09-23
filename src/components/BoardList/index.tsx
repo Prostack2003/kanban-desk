@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Wrapper, BoardContainer, ButtonContainer } from './BoardList.styles';
-import CreateModal from '../CreateModal/CreateModal';
 import { Button } from '../../elements/Buttons/MainButton/Button.styles';
-import BoardCard from '../BoardCard/BoardCard';
+import { BoardCard } from '../../components';
+import { CreateModal } from '../../components';
+import { BoardListProps } from './BoardListProps';
 
-export default function BoardList() {
+export const BoardList:FC<BoardListProps> = ({search}) => {
   const initialDesks = [{ id: 0, name: 'Первая Доска' }];
   const [desks, setDesks] = useState(initialDesks);
 
@@ -16,13 +17,16 @@ export default function BoardList() {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const desksForSearch = desks.filter((desk) =>
+    desk.name.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <Wrapper>
       <BoardContainer>
-        {desks.length === 0 ? (
-          <p>Нет доступных досок</p>
+        {desksForSearch.length === 0 ? (
+          <p className='board-paragraph'>Нет доступных досок</p>
         ) : (
-          desks.map((desk) => (
+          desksForSearch.map((desk) => (
             <BoardCard
               key={desk.id}
               name={desk.name}
