@@ -28,6 +28,7 @@ export const ColumnTitle = styled.h2`
 `;
 
 export const TaskCard = styled.div`
+    cursor: pointer;
     background-color: white;
     padding: 15px;
     margin-bottom: 10px;
