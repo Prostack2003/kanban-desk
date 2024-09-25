@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { BoardWrapper, Column, ColumnTitle, TaskCard } from './Task.styles';
+import { BoardWrapper, Column, ColumnTitle, Select, TaskCard, Textarea } from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
 import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../../../elements/Modal/Modal.styles';
 import React, { useState } from 'react';
@@ -14,7 +14,8 @@ export const Task = () => {
       date: getCurrentDate(),
       name: 'Первая Карточка Задачи',
       description: 'Описание',
-      status: 'Open'
+      priority: '',
+      status: 'Open',
     }
   ];
   const [tasks, setTasks] = useState(initialTasks);
@@ -22,6 +23,7 @@ export const Task = () => {
   const [nextId, setNextId] = useSetNextId(1);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
+  const [selected, setSelected] = useState('high')
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -30,6 +32,7 @@ export const Task = () => {
         date: getCurrentDate(),
         name: taskName,
         description: taskDescription,
+        priority: selected,
         status: 'Open',
       };
 
@@ -38,6 +41,7 @@ export const Task = () => {
       setIsModalOpen(false);
       setTaskName('');
       setTaskDescription('');
+      setSelected('high');
     }
   };
 
@@ -83,19 +87,21 @@ export const Task = () => {
                 onChange={(event) => setTaskName(event.target.value)}
                 required
               />
-              <textarea
+              <Textarea
                 placeholder="Описание задачи"
                 value={taskDescription}
                 onChange={(event) => setTaskDescription(event.target.value)}
                 required
-              ></textarea>
-              <select>
-                <option value="1">Высокий приоритет</option>
-                <option value="2">Средний приоритет</option>
-                <option value="3">Низкий приоритет</option>
-              </select>
-              <button type="button" onClick={handleCreateTask}>ОК</button>
-              <button onClick={closeCreateTaskModal}>Отмена</button>
+              ></Textarea>
+              <Select value={selected} onChange={event => setSelected(event.target.value)}>
+                <option value="high">Высокий приоритет</option>
+                <option value="middle">Средний приоритет</option>
+                <option value="low">Низкий приоритет</option>
+              </Select>
+              <Wrapper>
+                <Button type="button" onClick={handleCreateTask}>Создать</Button>
+                <Button onClick={closeCreateTaskModal}>Отмена</Button>
+              </Wrapper>
             </ModalContent>
           </ModalOverlay>
         )}

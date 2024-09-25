@@ -42,3 +42,24 @@ export const TaskCard = styled.div`
     }
 `;
 
+export const Textarea = styled.textarea`
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid white;
+    width: 80%;
+    background-color: #282c34;
+    resize: none;
+    margin-bottom: 10px;
+`
+
+export const Select = styled.select`
+    width: 80%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: #282c34;
+    color: white;
+    margin-bottom: 10px;
+`
+
