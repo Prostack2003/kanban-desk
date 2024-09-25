@@ -60,7 +60,7 @@ export const Task = () => {
           <ColumnTitle>Open</ColumnTitle>
           {tasks.map(task => (
             <TaskCard key={task.id}>
-              <p>{task.name}</p>
+              <p>{task.id + 1}. {task.name}</p>
             </TaskCard>
           ))}
         </Column>
