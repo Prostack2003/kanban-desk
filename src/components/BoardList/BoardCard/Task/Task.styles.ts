@@ -60,6 +60,4 @@ export const Select = styled.select`
     border: 1px solid white;
     background-color: #282c34;
     color: white;
-    margin-bottom: 10px;
 `
-

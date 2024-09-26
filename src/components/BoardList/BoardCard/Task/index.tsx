@@ -14,8 +14,9 @@ export const Task = () => {
       date: getCurrentDate(),
       name: 'Первая Карточка Задачи',
       description: 'Описание',
-      priority: '',
+      priority: 'high',
       status: 'Open',
+      mark: 'Метка'
     }
   ];
   const [tasks, setTasks] = useState(initialTasks);
@@ -24,6 +25,7 @@ export const Task = () => {
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [selected, setSelected] = useState('high')
+  const [mark, setMark] = useState('')
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -34,6 +36,7 @@ export const Task = () => {
         description: taskDescription,
         priority: selected,
         status: 'Open',
+        mark: mark,
       };
 
       setTasks([...tasks, newTask]);
@@ -42,6 +45,7 @@ export const Task = () => {
       setTaskName('');
       setTaskDescription('');
       setSelected('high');
+      setMark('')
     }
   };
 
@@ -51,6 +55,7 @@ export const Task = () => {
     setIsModalOpen(false);
     setTaskName('');
     setTaskDescription('');
+    setMark('')
   };
 
   return (
@@ -61,6 +66,14 @@ export const Task = () => {
           {tasks.map(task => (
             <TaskCard key={task.id}>
               <p>{task.id + 1}. {task.name}</p>
+              {task.priority === 'high'
+                ? <p style={{ color: '#FF0000' }}>#{task.mark}</p>
+                : task.priority === 'middle'
+                  ? <p style={{color: '#FFA500'}}>#{task.mark}</p>
+                  : task.priority === 'low'
+                    ? <p style={{ color: '#008000' }}>#{task.mark}</p>
+                    : <p>#{task.mark}</p>
+              }
             </TaskCard>
           ))}
         </Column>
@@ -82,15 +95,15 @@ export const Task = () => {
             <ModalContent>
               <InputModal
                 type="text"
-                placeholder="Название задачи"
+                placeholder="Название задачи*"
                 value={taskName}
-                onChange={(event) => setTaskName(event.target.value)}
+                onChange={event => setTaskName(event.target.value)}
                 required
               />
               <Textarea
-                placeholder="Описание задачи"
+                placeholder="Описание задачи*"
                 value={taskDescription}
-                onChange={(event) => setTaskDescription(event.target.value)}
+                onChange={event => setTaskDescription(event.target.value)}
                 required
               ></Textarea>
               <Select value={selected} onChange={event => setSelected(event.target.value)}>
@@ -98,6 +111,12 @@ export const Task = () => {
                 <option value="middle">Средний приоритет</option>
                 <option value="low">Низкий приоритет</option>
               </Select>
+                <InputModal
+                type='text'
+                placeholder='Метка Задачи'
+                value={mark}
+                onChange={event => setMark(event.target.value)}
+                />
               <Wrapper>
                 <Button type="button" onClick={handleCreateTask}>Создать</Button>
                 <Button onClick={closeCreateTaskModal}>Отмена</Button>
