@@ -16,7 +16,7 @@ export const Task = () => {
       name: 'Первая Карточка Задачи',
       description: 'Описание',
       priority: 'high',
-      status: 'Open',
+      status: 'open',
       mark: 'Метка'
     }
   ];
@@ -27,6 +27,8 @@ export const Task = () => {
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [selected, setSelected] = useState('high');
   const [mark, setMark] = useState('');
+  const [selectedPriority, setSelectedPriority] = useState('');
+  const [filteredTasks, setFilteredTasks] = useState(tasks);
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -36,7 +38,7 @@ export const Task = () => {
         name: taskName,
         description: taskDescription,
         priority: selected,
-        status: 'Open',
+        status: 'open',
         mark: mark
       };
 
@@ -59,20 +61,33 @@ export const Task = () => {
     setMark('');
   };
 
+  const applyFilters = () => {
+    const filtered = tasks.filter(task => task.priority === selectedPriority);
+    setFilteredTasks(filtered);
+  };
+
   return (
     <>
       <BoardWrapper>
         <Select>
-          <option>Open</option>
-          <option>In Progress</option>
-          <option>Review</option>
-          <option>Done</option>
+          <option value="open">Open</option>
+          <option value="in progress">In Progress</option>
+          <option value="review">Review</option>
+          <option value="done">Done</option>
         </Select>
+        <Select onChange={(event) => setSelectedPriority(event.target.value)}>
+          <option value="high">High</option>
+          <option value="middle">Middle</option>
+          <option value="low">Low</option>
+        </Select>
+        <Button onClick={applyFilters}>Применить фильтрацию задач</Button>
       </BoardWrapper>
       <BoardWrapper>
         <Column>
           <ColumnTitle>Open</ColumnTitle>
-          {tasks.map(task => (
+          {filteredTasks
+            .filter((task) => task.status === 'open')
+            .map(task => (
             <TaskCard key={task.id}>
               <p>{task.id + 1}. {task.name}</p>
               {task.priority === 'high'
