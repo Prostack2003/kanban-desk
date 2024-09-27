@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { BoardWrapper, Column, ColumnTitle, Select, TaskCard, Textarea } from './Task.styles';
+import { BoardWrapper, Column, ColumnTitle, Select, TaskCard } from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
-import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../../../elements/Modal/Modal.styles';
+import { Wrapper } from '../../../../elements/Modal/Modal.styles';
 import React, { useState } from 'react';
 import { useSetNextId } from '../../../../utils/CustomHooks/useSetNextId';
 import { getCurrentDate } from '../../../../utils/functions/getCurrentDate';
+import { TaskModal } from './TaskModal';
 
 export const Task = () => {
   const { taskId } = useParams();
@@ -24,8 +25,8 @@ export const Task = () => {
   const [nextId, setNextId] = useSetNextId(1);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
-  const [selected, setSelected] = useState('high')
-  const [mark, setMark] = useState('')
+  const [selected, setSelected] = useState('high');
+  const [mark, setMark] = useState('');
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -36,7 +37,7 @@ export const Task = () => {
         description: taskDescription,
         priority: selected,
         status: 'Open',
-        mark: mark,
+        mark: mark
       };
 
       setTasks([...tasks, newTask]);
@@ -45,7 +46,7 @@ export const Task = () => {
       setTaskName('');
       setTaskDescription('');
       setSelected('high');
-      setMark('')
+      setMark('');
     }
   };
 
@@ -55,11 +56,19 @@ export const Task = () => {
     setIsModalOpen(false);
     setTaskName('');
     setTaskDescription('');
-    setMark('')
+    setMark('');
   };
 
   return (
     <>
+      <BoardWrapper>
+        <Select>
+          <option>Open</option>
+          <option>In Progress</option>
+          <option>Review</option>
+          <option>Done</option>
+        </Select>
+      </BoardWrapper>
       <BoardWrapper>
         <Column>
           <ColumnTitle>Open</ColumnTitle>
@@ -69,7 +78,7 @@ export const Task = () => {
               {task.priority === 'high'
                 ? <p style={{ color: '#FF0000' }}>#{task.mark}</p>
                 : task.priority === 'middle'
-                  ? <p style={{color: '#FFA500'}}>#{task.mark}</p>
+                  ? <p style={{ color: '#FFA500' }}>#{task.mark}</p>
                   : task.priority === 'low'
                     ? <p style={{ color: '#008000' }}>#{task.mark}</p>
                     : <p>#{task.mark}</p>
@@ -91,38 +100,18 @@ export const Task = () => {
         </Column>
 
         {isModalOpen && (
-          <ModalOverlay>
-            <ModalContent>
-              <InputModal
-                type="text"
-                placeholder="Название задачи*"
-                value={taskName}
-                onChange={event => setTaskName(event.target.value)}
-                required
-              />
-              <Textarea
-                placeholder="Описание задачи*"
-                value={taskDescription}
-                onChange={event => setTaskDescription(event.target.value)}
-                required
-              ></Textarea>
-              <Select value={selected} onChange={event => setSelected(event.target.value)}>
-                <option value="high">Высокий приоритет</option>
-                <option value="middle">Средний приоритет</option>
-                <option value="low">Низкий приоритет</option>
-              </Select>
-                <InputModal
-                type='text'
-                placeholder='Метка Задачи'
-                value={mark}
-                onChange={event => setMark(event.target.value)}
-                />
-              <Wrapper>
-                <Button type="button" onClick={handleCreateTask}>Создать</Button>
-                <Button onClick={closeCreateTaskModal}>Отмена</Button>
-              </Wrapper>
-            </ModalContent>
-          </ModalOverlay>
+          <TaskModal
+            taskName={taskName}
+            taskDescription={taskDescription}
+            selectedPriority={selected}
+            mark={mark}
+            onTaskNameChange={e => setTaskName(e.target.value)}
+            onTaskDescriptionChange={e => setTaskDescription(e.target.value)}
+            onPriorityChange={e => setSelected(e.target.value)}
+            onMarkChange={e => setMark(e.target.value)}
+            onSubmit={handleCreateTask}
+            onCancel={closeCreateTaskModal}
+          />
         )}
       </BoardWrapper>
       <Wrapper>
