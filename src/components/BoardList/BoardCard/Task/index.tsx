@@ -1,25 +1,37 @@
 import { useParams } from 'react-router-dom';
-import { BoardWrapper, Column, ColumnTitle, Select, TaskCard } from './Task.styles';
+import { BoardWrapper, Select} from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
 import { Wrapper } from '../../../../elements/Modal/Modal.styles';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useSetNextId } from '../../../../utils/CustomHooks/useSetNextId';
 import { getCurrentDate } from '../../../../utils/functions/getCurrentDate';
-import { TaskModal } from './TaskModal';
+import { TaskModal } from '../../../../components';
+import { TaskColumn } from '../../../../components';
 
-export const Task = () => {
+export const Task:FC = () => {
   const { taskId } = useParams();
   const initialTasks = [
     {
       id: 0,
       date: getCurrentDate(),
-      name: 'Первая Карточка Задачи',
+      name: 'Карточка Задачи',
       description: 'Описание',
       priority: 'high',
       status: 'open',
       mark: 'Метка'
+    },
+    {
+      id: 1,
+      date: '1-10-2024',
+      name: 'Карточка Задачи',
+      description: 'Описание',
+      priority: 'high',
+      status: 'in progress',
+      mark: 'Метка'
     }
   ];
+  const statusCard = ['Open', 'In Progress', 'Review', 'Done']
+  const [statusCards, setStatusCards] = useState('');
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nextId, setNextId] = useSetNextId(1);
@@ -27,8 +39,9 @@ export const Task = () => {
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [selected, setSelected] = useState('high');
   const [mark, setMark] = useState('');
-  const [selectedPriority, setSelectedPriority] = useState('');
+  const [selectedPriority, setSelectedPriority] = useState('high');
   const [filteredTasks, setFilteredTasks] = useState(tasks);
+
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -42,7 +55,10 @@ export const Task = () => {
         mark: mark
       };
 
-      setTasks([...tasks, newTask]);
+      const updatedTasks = [...tasks, newTask];
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks);
+
       setNextId();
       setIsModalOpen(false);
       setTaskName('');
@@ -62,14 +78,20 @@ export const Task = () => {
   };
 
   const applyFilters = () => {
-    const filtered = tasks.filter(task => task.priority === selectedPriority);
-    setFilteredTasks(filtered);
+    setFilteredTasks(tasks.filter(task =>
+      (statusCards ? task.status === statusCards : true) &&
+      (selectedPriority ? task.priority === selectedPriority : true)
+    ));
   };
+
+  const removeFilters = () => {
+    setFilteredTasks(tasks);
+  }
 
   return (
     <>
       <BoardWrapper>
-        <Select>
+        <Select onChange={(event) => setStatusCards(event.target.value)}>
           <option value="open">Open</option>
           <option value="in progress">In Progress</option>
           <option value="review">Review</option>
@@ -81,39 +103,12 @@ export const Task = () => {
           <option value="low">Low</option>
         </Select>
         <Button onClick={applyFilters}>Применить фильтрацию задач</Button>
+        <Button onClick={removeFilters}>Сбросить фильтрацию задач</Button>
       </BoardWrapper>
       <BoardWrapper>
-        <Column>
-          <ColumnTitle>Open</ColumnTitle>
-          {filteredTasks
-            .filter((task) => task.status === 'open')
-            .map(task => (
-            <TaskCard key={task.id}>
-              <p>{task.id + 1}. {task.name}</p>
-              {task.priority === 'high'
-                ? <p style={{ color: '#FF0000' }}>#{task.mark}</p>
-                : task.priority === 'middle'
-                  ? <p style={{ color: '#FFA500' }}>#{task.mark}</p>
-                  : task.priority === 'low'
-                    ? <p style={{ color: '#008000' }}>#{task.mark}</p>
-                    : <p>#{task.mark}</p>
-              }
-            </TaskCard>
-          ))}
-        </Column>
-
-        <Column>
-          <ColumnTitle>In Progress</ColumnTitle>
-        </Column>
-
-        <Column>
-          <ColumnTitle>Review</ColumnTitle>
-        </Column>
-
-        <Column>
-          <ColumnTitle>Done</ColumnTitle>
-        </Column>
-
+        {statusCard.map((title, index) =>
+          <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />)
+        }
         {isModalOpen && (
           <TaskModal
             taskName={taskName}

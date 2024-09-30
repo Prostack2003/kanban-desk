@@ -5,3 +5,6 @@ export { ChangeModal } from './BoardList/BoardCard/ChangeModal';
 export { CreateModal } from './BoardList/CreateModal';
 export { DeleteModal } from './BoardList/BoardCard/DeleteModal';
 export { Task } from './BoardList/BoardCard/Task';
+export { TaskColumn } from './BoardList/BoardCard/Task/TaskColumn';
+export { TaskCards } from './BoardList/BoardCard/Task/TaskCards';
+export { TaskModal } from './BoardList/BoardCard/Task/TaskModal';
