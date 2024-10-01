@@ -30,8 +30,8 @@ export const Task:FC = () => {
       mark: 'Метка'
     }
   ];
-  const statusCard = ['Open', 'In Progress', 'Review', 'Done']
-  const [statusCards, setStatusCards] = useState('');
+  const statusCards = ['Open', 'In Progress', 'Review', 'Done'];
+  const [statusCard, setStatusCard] = useState('open');
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nextId, setNextId] = useSetNextId(1);
@@ -41,7 +41,6 @@ export const Task:FC = () => {
   const [mark, setMark] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('high');
   const [filteredTasks, setFilteredTasks] = useState(tasks);
-
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -79,8 +78,8 @@ export const Task:FC = () => {
 
   const applyFilters = () => {
     setFilteredTasks(tasks.filter(task =>
-      (statusCards ? task.status === statusCards : true) &&
-      (selectedPriority ? task.priority === selectedPriority : true)
+      selectedPriority === task.priority &&
+      statusCard === task.status
     ));
   };
 
@@ -91,7 +90,7 @@ export const Task:FC = () => {
   return (
     <>
       <BoardWrapper>
-        <Select onChange={(event) => setStatusCards(event.target.value)}>
+        <Select onChange={(event) => setStatusCard(event.target.value)}>
           <option value="open">Open</option>
           <option value="in progress">In Progress</option>
           <option value="review">Review</option>
@@ -106,9 +105,11 @@ export const Task:FC = () => {
         <Button onClick={removeFilters}>Сбросить фильтрацию задач</Button>
       </BoardWrapper>
       <BoardWrapper>
-        {statusCard.map((title, index) =>
-          <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />)
-        }
+        {statusCards.map((title, index) => (
+          (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
+            <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks.filter(task => task.status === title.toLowerCase())} />
+          )
+        ))}
         {isModalOpen && (
           <TaskModal
             taskName={taskName}

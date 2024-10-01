@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BoardWrapper = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 20px;
     padding: 20px;
 `;
