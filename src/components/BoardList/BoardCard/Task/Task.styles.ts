@@ -61,3 +61,11 @@ export const Select = styled.select`
     background-color: #282c34;
     color: white;
 `
+
+export const InputMark = styled.input`
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid white;
+    width: 80%;
+    background-color: #282c34;`

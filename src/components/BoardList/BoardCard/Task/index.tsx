@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { BoardWrapper, Select} from './Task.styles';
+import { BoardWrapper, InputMark, Select } from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
 import { Wrapper } from '../../../../elements/Modal/Modal.styles';
 import React, { FC, useState } from 'react';
@@ -31,15 +31,16 @@ export const Task:FC = () => {
     }
   ];
   const statusCards = ['Open', 'In Progress', 'Review', 'Done'];
-  const [statusCard, setStatusCard] = useState('open');
+  const [statusCard, setStatusCard] = useState<string>('open');
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [nextId, setNextId] = useSetNextId(1);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
-  const [selected, setSelected] = useState('high');
-  const [mark, setMark] = useState('');
-  const [selectedPriority, setSelectedPriority] = useState('high');
+  const [mark, setMark] = useState<string>('');
+  const [markSearch, setMarkSearch] = useState<string>('');
+  const [selected, setSelected] = useState<string>('high');
+  const [selectedPriority, setSelectedPriority] = useState<string>('high');
   const [filteredTasks, setFilteredTasks] = useState(tasks);
 
   const handleCreateTask = () => {
@@ -79,7 +80,8 @@ export const Task:FC = () => {
   const applyFilters = () => {
     setFilteredTasks(tasks.filter(task =>
       selectedPriority === task.priority &&
-      statusCard === task.status
+      statusCard === task.status &&
+      task.mark.toLowerCase().includes(markSearch.toLowerCase())
     ));
   };
 
@@ -101,6 +103,13 @@ export const Task:FC = () => {
           <option value="middle">Middle</option>
           <option value="low">Low</option>
         </Select>
+        <InputMark
+          type="text"
+          placeholder="Поиск по метке"
+          value={markSearch}
+          onChange={(event) => setMarkSearch(event.target.value)}
+          required
+        />
         <Button onClick={applyFilters}>Применить фильтрацию задач</Button>
         <Button onClick={removeFilters}>Сбросить фильтрацию задач</Button>
       </BoardWrapper>
