@@ -3,27 +3,28 @@ import styled from 'styled-components';
 export const BoardWrapper = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 20px;
-    padding: 20px;
+    padding-inline: 20px;
 `;
 
 export const Column = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: #f4f5f7; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    width: 25%; 
+    background-color: #f4f5f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 25%;
     padding: 20px;
-    min-height: 400px; 
+    min-height: 400px;
 `;
 
 export const ColumnTitle = styled.h2`
     text-align: center;
     font-size: 1.5em;
-    color: #333; 
+    color: #333;
     margin-bottom: 20px;
-    border-bottom: 2px solid #ddd; 
+    border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
 `;
 
@@ -33,12 +34,12 @@ export const TaskCard = styled.div`
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    border-left: 4px solid #0079bf; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #0079bf;
     transition: transform 0.1s ease-in-out;
-    
+
     &:hover {
-        transform: scale(1.02); 
+        transform: scale(1.02);
     }
 `;
 
@@ -51,7 +52,7 @@ export const Textarea = styled.textarea`
     background-color: #282c34;
     resize: none;
     margin-bottom: 10px;
-`
+`;
 
 export const Select = styled.select`
     width: 80%;
@@ -60,7 +61,7 @@ export const Select = styled.select`
     border: 1px solid white;
     background-color: #282c34;
     color: white;
-`
+`;
 
 export const InputMark = styled.input`
     padding: 8px;
@@ -68,4 +69,29 @@ export const InputMark = styled.input`
     color: white;
     border: 1px solid white;
     width: 80%;
-    background-color: #282c34;`
+    background-color: #282c34;`;
+
+export const SortWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-inline: 20px;
+`;
+
+export const InputSort = styled.input`
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid white;
+    width: 30%;
+    background-color: #282c34;
+`
+
+export const SelectSort = styled.select`
+    width: 30%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: #282c34;
+    color: white;
+`;
