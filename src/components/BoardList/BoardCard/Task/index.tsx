@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { BoardWrapper, InputMark, Select } from './Task.styles';
+import { BoardWrapper, ButtonWrapper, InputMark, Select, SelectSort } from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
 import { Wrapper } from '../../../../elements/Modal/Modal.styles';
 import React, { FC, useState } from 'react';
@@ -7,6 +7,8 @@ import { useSetNextId } from '../../../../utils/CustomHooks/useSetNextId';
 import { getCurrentDate } from '../../../../utils/functions/getCurrentDate';
 import { TaskModal } from '../../../../components';
 import { TaskColumn } from '../../../../components';
+
+type Priority = 'high' | 'middle' | 'low';
 
 export const Task:FC = () => {
   const { taskId } = useParams();
@@ -23,7 +25,7 @@ export const Task:FC = () => {
     {
       id: 1,
       date: '1-10-2024',
-      name: 'Карточка Задачи',
+      name: 'Название',
       description: 'Описание',
       priority: 'high',
       status: 'in progress',
@@ -34,14 +36,17 @@ export const Task:FC = () => {
   const [statusCard, setStatusCard] = useState<string>('open');
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [nextId, setNextId] = useSetNextId(1);
+  const [nextId, setNextId] = useSetNextId(2);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [mark, setMark] = useState<string>('');
   const [markSearch, setMarkSearch] = useState<string>('');
   const [selected, setSelected] = useState<string>('high');
-  const [selectedPriority, setSelectedPriority] = useState<string>('high');
+  const [selectedPriority, setSelectedPriority] = useState<string>('all');
+  const [sortPriority, setSortPriority] = useState<string>('all');
   const [filteredTasks, setFilteredTasks] = useState(tasks);
+  const [sortDirection, setSortDirection] = useState<string>('abc');
+  const priorityOrder: Record<Priority, number> = { high: 3, middle: 2, low: 1 };
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -78,15 +83,32 @@ export const Task:FC = () => {
   };
 
   const applyFilters = () => {
-    setFilteredTasks(tasks.filter(task =>
-      selectedPriority === task.priority &&
+    let filtered = tasks.filter(task =>
+      (selectedPriority === task.priority || selectedPriority === 'all') &&
       statusCard === task.status &&
       task.mark.toLowerCase().includes(markSearch.toLowerCase())
-    ));
+    );
+
+    filtered = filtered.sort((a, b) => {
+      if (sortDirection === 'abc') {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    if (sortPriority === 'big') {
+      filtered.sort((a, b) => priorityOrder[b.priority as Priority] - priorityOrder[a.priority as Priority]);
+    } else if (sortPriority === 'small') {
+      filtered.sort((a, b) => priorityOrder[a.priority as Priority] - priorityOrder[b.priority as Priority]);
+    }
+
+    setFilteredTasks(filtered);
   };
 
   const removeFilters = () => {
     setFilteredTasks(tasks);
+    setSortDirection('abc');
   }
 
   return (
@@ -99,6 +121,7 @@ export const Task:FC = () => {
           <option value="done">Done</option>
         </Select>
         <Select onChange={(event) => setSelectedPriority(event.target.value)}>
+          <option value="all">Все приоритеты</option>
           <option value="high">High</option>
           <option value="middle">Middle</option>
           <option value="low">Low</option>
@@ -110,13 +133,32 @@ export const Task:FC = () => {
           onChange={(event) => setMarkSearch(event.target.value)}
           required
         />
-        <Button onClick={applyFilters}>Применить фильтрацию задач</Button>
-        <Button onClick={removeFilters}>Сбросить фильтрацию задач</Button>
+        <ButtonWrapper>
+          <Button onClick={applyFilters}>Применить фильтрацию задач</Button>
+        </ButtonWrapper>
       </BoardWrapper>
       <BoardWrapper>
+        <SelectSort onChange={(event) => setSortDirection(event.target.value)}>
+          <option value="abc">Название (А-я)</option>
+          <option value="cba">Название (Я-а)</option>
+        </SelectSort>
+        <SelectSort onChange={(event) => setSortPriority(event.target.value)}>
+          <option value="all">Без сортировки по приоритету</option>
+          <option value="big">От большего приоритета</option>
+          <option value="small">От меньшего приоритета</option>
+        </SelectSort>
+        <SelectSort>
+          <option value="newdate">Сначала новые</option>
+          <option value="olddate">Сначала старые</option>
+        </SelectSort>
+        <ButtonWrapper>
+          <Button onClick={removeFilters}>Сбросить фильтрацию задач</Button>
+        </ButtonWrapper>
+      </BoardWrapper>
+      <Wrapper>
         {statusCards.map((title, index) => (
           (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
-            <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks.filter(task => task.status === title.toLowerCase())} />
+            <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />
           )
         ))}
         {isModalOpen && (
@@ -133,7 +175,7 @@ export const Task:FC = () => {
             onCancel={closeCreateTaskModal}
           />
         )}
-      </BoardWrapper>
+      </Wrapper>
       <Wrapper>
         <Button onClick={openCreateTaskModal}>Создать задачу</Button>
       </Wrapper>

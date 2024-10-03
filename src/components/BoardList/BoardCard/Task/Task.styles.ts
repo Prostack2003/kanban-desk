@@ -78,20 +78,20 @@ export const SortWrapper = styled.div`
     padding-inline: 20px;
 `;
 
-export const InputSort = styled.input`
-    padding: 8px;
-    border-radius: 5px;
-    color: white;
-    border: 1px solid white;
-    width: 30%;
-    background-color: #282c34;
-`
-
 export const SelectSort = styled.select`
-    width: 30%;
+    width: 80%;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid white;
     background-color: #282c34;
     color: white;
 `;
+
+export const ButtonWrapper = styled.div`
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    align-items: center;
+`
