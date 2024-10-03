@@ -25,12 +25,21 @@ export const Task:FC = () => {
     {
       id: 1,
       date: '1-10-2024',
-      name: 'Название',
-      description: 'Описание',
+      name: 'Пример названия карточки 2',
+      description: 'Пример описания карточки 2',
+      priority: 'high',
+      status: 'open',
+      mark: 'Пример метки карточки 2'
+    },
+    {
+      id: 2,
+      date: '2-10-2024',
+      name: 'Название карточки',
+      description: 'Описание карточки',
       priority: 'high',
       status: 'in progress',
-      mark: 'Метка'
-    }
+      mark: 'Метка карточки'
+    },
   ];
   const statusCards = ['Open', 'In Progress', 'Review', 'Done'];
   const [statusCard, setStatusCard] = useState<string>('open');
@@ -47,6 +56,7 @@ export const Task:FC = () => {
   const [filteredTasks, setFilteredTasks] = useState(tasks);
   const [sortDirection, setSortDirection] = useState<string>('abc');
   const priorityOrder: Record<Priority, number> = { high: 3, middle: 2, low: 1 };
+  const [sortDate, setSortDate] = useState<string>('newDate');
 
   const handleCreateTask = () => {
     if (taskName && taskDescription) {
@@ -103,6 +113,12 @@ export const Task:FC = () => {
       filtered.sort((a, b) => priorityOrder[a.priority as Priority] - priorityOrder[b.priority as Priority]);
     }
 
+    if (sortDate === 'newDate') {
+      filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (sortDate === 'oldDate') {
+      filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    }
+
     setFilteredTasks(filtered);
   };
 
@@ -147,9 +163,9 @@ export const Task:FC = () => {
           <option value="big">От большего приоритета</option>
           <option value="small">От меньшего приоритета</option>
         </SelectSort>
-        <SelectSort>
-          <option value="newdate">Сначала новые</option>
-          <option value="olddate">Сначала старые</option>
+        <SelectSort onChange={(event) => setSortDate(event.target.value)}>
+          <option value="newDate">Сначала новые</option>
+          <option value="oldDate">Сначала старые</option>
         </SelectSort>
         <ButtonWrapper>
           <Button onClick={removeFilters}>Сбросить фильтрацию задач</Button>
