@@ -7,6 +7,7 @@ import { useSetNextId } from '../../../../utils/CustomHooks/useSetNextId';
 import { getCurrentDate } from '../../../../utils/functions/getCurrentDate';
 import { TaskModal } from '../../../../components';
 import { TaskColumn } from '../../../../components';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 type Priority = 'high' | 'middle' | 'low';
 
@@ -127,6 +128,36 @@ export const Task:FC = () => {
     setSortDirection('abc');
   }
 
+  const handleOnDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const taskId = parseInt(draggableId);
+    const draggedTask = tasks.find(task => task.id === taskId);
+
+    if (draggedTask) {
+      const updatedTask = {
+        ...draggedTask,
+        status: destination.droppableId.toLowerCase()
+      };
+
+      const updatedTasks = tasks.map(task =>
+        task.id === taskId ? updatedTask : task
+      );
+
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks);
+    }
+  };
+
   return (
     <>
       <BoardWrapper>
@@ -172,11 +203,13 @@ export const Task:FC = () => {
         </ButtonWrapper>
       </BoardWrapper>
       <Wrapper>
-        {statusCards.map((title, index) => (
-          (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
-            <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />
-          )
-        ))}
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          {statusCards.map((title, index) => (
+            (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
+              <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />
+            )
+          ))}
+        </DragDropContext>
         {isModalOpen && (
           <TaskModal
             taskName={taskName}

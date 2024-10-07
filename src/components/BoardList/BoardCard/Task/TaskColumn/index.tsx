@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Column, ColumnTitle } from '../Task.styles';
 import { TaskCards } from '../../../../../components';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 export type TaskStatus = 'open' | 'in progress' | 'review' | 'done'
 
@@ -28,14 +29,32 @@ interface TaskColumnProps {
 
 export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks }) => {
   return (
-    <Column>
-      <ColumnTitle>{title}</ColumnTitle>
-      {filteredTasks
-        .filter((task) => task.status.toLowerCase() === title.toLowerCase())
-        .map(task => (
-          <TaskCards key={task.id} task={task} />
-        ))}
-    </Column>
+    <Droppable droppableId={title.toLowerCase()}>
+      {provided => (
+        <Column
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          <ColumnTitle>{title}</ColumnTitle>
+          {filteredTasks
+            .filter((task) => task.status.toLowerCase() === title.toLowerCase())
+            .map((task, index) => (
+              <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                {provided => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <TaskCards task={task} />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+          {provided.placeholder}
+        </Column>
+      )}
+    </Droppable>
   );
 };
 
