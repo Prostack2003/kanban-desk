@@ -2,6 +2,7 @@ import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { InputModal } from './CreateModal.styles';
 import { Button } from '../../../elements/Buttons/MainButton/Button.styles';
 import { ModalContent, ModalOverlay, Wrapper } from '../../../elements/Modal/Modal.styles';
+import { useSetNextId } from '../../../utils/CustomHooks/useSetNextId';
 
 interface CreateModalProps {
   isOpen: boolean;
@@ -11,13 +12,12 @@ interface CreateModalProps {
 
 export const CreateModal: FC<CreateModalProps> = ({ isOpen, onClose, setDesks })  => {
   const [deskName, setDeskName] = useState('');
-  const [nextId, setNextId] = useState(1)
+  const [nextId, setNextId] = useSetNextId(1)
 
   const handleSubmit = () => {
     if(deskName.trim() === '') return null;
-
     setDesks(prevDesks => [...prevDesks, { id: nextId, name: deskName }]);
-    setNextId(prevId => prevId + 1);
+    setNextId();
     setDeskName('')
     onClose();
   };
