@@ -46,7 +46,7 @@ export const Task:FC = () => {
   const [statusCard, setStatusCard] = useState<string>('open');
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [nextId, setNextId] = useSetNextId(2);
+  const [nextId, setNextId] = useSetNextId(3);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [mark, setMark] = useState<string>('');
