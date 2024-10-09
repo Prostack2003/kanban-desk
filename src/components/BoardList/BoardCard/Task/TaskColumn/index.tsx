@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { Column, ColumnTitle } from '../Task.styles';
 import { TaskCards } from '../../../../../components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
@@ -24,10 +24,18 @@ interface TaskColumnProps {
     priority: string;
     mark: string;
     status: string
-  }[]
+  }[],
+  setTasks: Dispatch<SetStateAction<{
+    id: number,
+    date: string,
+    name: string,
+    description: string,
+    priority: string,
+    status: string,
+    mark: string }[]>>;
 }
 
-export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks }) => {
+export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks, setTasks }) => {
   return (
     <Droppable droppableId={title.toLowerCase()}>
       {provided => (
@@ -46,7 +54,7 @@ export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks }) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <TaskCards task={task} />
+                    <TaskCards task={task} setTasks={setTasks}  />
                   </div>
                 )}
               </Draggable>

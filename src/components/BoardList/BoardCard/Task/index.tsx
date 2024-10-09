@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { BoardWrapper, ButtonWrapper, InputMark, Select, SelectSort } from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
 import { Wrapper } from '../../../../elements/Modal/Modal.styles';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSetNextId } from '../../../../utils/CustomHooks/useSetNextId';
 import { getCurrentDate } from '../../../../utils/functions/getCurrentDate';
 import { TaskModal } from '../../../../components';
@@ -206,7 +206,7 @@ export const Task:FC = () => {
         <DragDropContext onDragEnd={handleOnDragEnd}>
           {statusCards.map((title, index) => (
             (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
-              <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />
+              <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} setTasks={setTasks} />
             )
           ))}
         </DragDropContext>
