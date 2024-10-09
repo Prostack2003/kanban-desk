@@ -2,11 +2,12 @@ import { useParams } from 'react-router-dom';
 import { BoardWrapper, ButtonWrapper, InputMark, Select, SelectSort } from './Task.styles';
 import { Button } from '../../../../elements/Buttons/MainButton/Button.styles';
 import { Wrapper } from '../../../../elements/Modal/Modal.styles';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSetNextId } from '../../../../utils/CustomHooks/useSetNextId';
 import { getCurrentDate } from '../../../../utils/functions/getCurrentDate';
 import { TaskModal } from '../../../../components';
 import { TaskColumn } from '../../../../components';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 type Priority = 'high' | 'middle' | 'low';
 
@@ -45,7 +46,7 @@ export const Task:FC = () => {
   const [statusCard, setStatusCard] = useState<string>('open');
   const [tasks, setTasks] = useState(initialTasks);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [nextId, setNextId] = useSetNextId(2);
+  const [nextId, setNextId] = useSetNextId(3);
   const [taskName, setTaskName] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [mark, setMark] = useState<string>('');
@@ -127,6 +128,36 @@ export const Task:FC = () => {
     setSortDirection('abc');
   }
 
+  const handleOnDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const taskId = parseInt(draggableId);
+    const draggedTask = tasks.find(task => task.id === taskId);
+
+    if (draggedTask) {
+      const updatedTask = {
+        ...draggedTask,
+        status: destination.droppableId.toLowerCase()
+      };
+
+      const updatedTasks = tasks.map(task =>
+        task.id === taskId ? updatedTask : task
+      );
+
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks);
+    }
+  };
+
   return (
     <>
       <BoardWrapper>
@@ -172,11 +203,13 @@ export const Task:FC = () => {
         </ButtonWrapper>
       </BoardWrapper>
       <Wrapper>
-        {statusCards.map((title, index) => (
-          (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
-            <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} />
-          )
-        ))}
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          {statusCards.map((title, index) => (
+            (statusCard === title.toLowerCase() || filteredTasks.length === tasks.length) && (
+              <TaskColumn key={index} title={title} tasks={tasks} filteredTasks={filteredTasks} setTasks={setTasks} />
+            )
+          ))}
+        </DragDropContext>
         {isModalOpen && (
           <TaskModal
             taskName={taskName}
