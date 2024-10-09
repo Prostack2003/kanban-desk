@@ -25,7 +25,7 @@ interface TaskColumnProps {
     mark: string;
     status: string
   }[],
-  setTasks: Dispatch<SetStateAction<{
+  setFilteredTasks: Dispatch<SetStateAction<{
     id: number,
     date: string,
     name: string,
@@ -33,9 +33,17 @@ interface TaskColumnProps {
     priority: string,
     status: string,
     mark: string }[]>>;
+  setTasks: Dispatch<SetStateAction<{
+    id: number,
+    date: string,
+    name: string,
+    description: string,
+    priority: string,
+    status: string,
+    mark: string }[]>>
 }
 
-export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks, setTasks }) => {
+export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks, setFilteredTasks, setTasks }) => {
   return (
     <Droppable droppableId={title.toLowerCase()}>
       {provided => (
@@ -54,7 +62,7 @@ export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks, setTasks
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <TaskCards task={task} setTasks={setTasks}  />
+                    <TaskCards task={task} setFilteredTasks={setFilteredTasks} setTasks={setTasks}/>
                   </div>
                 )}
               </Draggable>

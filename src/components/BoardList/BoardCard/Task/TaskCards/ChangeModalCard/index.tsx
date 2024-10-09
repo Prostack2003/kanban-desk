@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useInput } from '../../../../../../utils/CustomHooks/useInput';
 import { InputModal, ModalContent, ModalOverlay, Wrapper } from '../../../../../../elements/Modal/Modal.styles';
 import { Button } from '../../../../../../elements/Buttons/MainButton/Button.styles';
@@ -17,7 +17,7 @@ interface ChangeModalCardProps {
   isOpen: boolean;
   onClose: () => void;
   taskId: number;
-  setTasks: Dispatch<SetStateAction<{
+  setFilteredTasks: Dispatch<SetStateAction<{
     id: number,
     date: string,
     name: string,
@@ -25,16 +25,24 @@ interface ChangeModalCardProps {
     priority: string,
     status: string,
     mark: string }[]>>;
+  setTasks: Dispatch<SetStateAction<{
+    id: number,
+    date: string,
+    name: string,
+    description: string,
+    priority: string,
+    status: string,
+    mark: string }[]>>
 }
 
-export const ChangeModalCard: FC<ChangeModalCardProps> = ({ task, isOpen, onClose, taskId, setTasks }) => {
+export const ChangeModalCard: FC<ChangeModalCardProps> = ({ task, isOpen, onClose, taskId, setFilteredTasks, setTasks }) => {
   const [newName, handleNameChange] = useInput(task.name);
   const [newDescription, handleNameDescriptionChange] = useInput(task.description);
   const [newMark, handleMarkChange] = useInput(task.mark || '');
-  const [newStatus, setNewStatus] = React.useState(task.status);
+  const [newStatus, setNewStatus] = useState(task.status);
 
   const handleSave = () => {
-    setTasks(prevTasks => prevTasks.map(task =>
+    setFilteredTasks(prevTasks => prevTasks.map(task =>
       task.id === taskId ? { ...task, name: newName, description: newDescription, mark: newMark, status: newStatus } : task
     ));
     onClose();

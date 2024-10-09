@@ -12,7 +12,7 @@ interface TaskCardProps {
     priority: string,
     mark?: string
   };
-  setTasks: Dispatch<SetStateAction<{
+  setFilteredTasks: Dispatch<SetStateAction<{
     id: number,
     date: string,
     name: string,
@@ -20,9 +20,17 @@ interface TaskCardProps {
     priority: string,
     status: string,
     mark: string }[]>>;
+  setTasks: Dispatch<SetStateAction<{
+    id: number,
+    date: string,
+    name: string,
+    description: string,
+    priority: string,
+    status: string,
+    mark: string }[]>>
 }
 
-export const TaskCards: FC<TaskCardProps> = ({ task, setTasks }) => {
+export const TaskCards: FC<TaskCardProps> = ({ task, setFilteredTasks, setTasks }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -41,7 +49,7 @@ export const TaskCards: FC<TaskCardProps> = ({ task, setTasks }) => {
               : <p>#{task.mark}</p>
         }
       </TaskCard>
-      <ChangeModalCard isOpen={isOpen} task={task} onClose={closeModal} taskId={task.id} setTasks={setTasks} />
+      <ChangeModalCard isOpen={isOpen} task={task} onClose={closeModal} taskId={task.id} setFilteredTasks={setFilteredTasks} setTasks={setTasks} />
     </>
   );
 };
