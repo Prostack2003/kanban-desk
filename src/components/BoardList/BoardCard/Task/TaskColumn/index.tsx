@@ -43,7 +43,7 @@ interface TaskColumnProps {
     mark: string }[]>>
 }
 
-export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks, setFilteredTasks, setTasks }) => {
+export const TaskColumn: FC<TaskColumnProps> = ({ title, tasks, filteredTasks, setFilteredTasks, setTasks }) => {
   return (
     <Droppable droppableId={title.toLowerCase()}>
       {provided => (
@@ -62,7 +62,7 @@ export const TaskColumn: FC<TaskColumnProps> = ({ title, filteredTasks, setFilte
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <TaskCards task={task} setFilteredTasks={setFilteredTasks} setTasks={setTasks}/>
+                    <TaskCards task={task} tasks={tasks} setFilteredTasks={setFilteredTasks} setTasks={setTasks}/>
                   </div>
                 )}
               </Draggable>
